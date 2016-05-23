@@ -3,7 +3,7 @@
 
 int main()
 {
-    list_node * questions = questions_parse("questions.txt");
+    list_node * questions = questions_parse("questions.md");
 
     list_foreach(questions, question_print);
 

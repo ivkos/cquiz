@@ -13,4 +13,4 @@ set(SERVER_SOURCE_FILES
         src/server/question_parser.h)
 
 add_executable(cquiz-server ${SERVER_SOURCE_FILES})
-configure_file(questions.txt questions.txt COPYONLY)
+configure_file(questions.md questions.md COPYONLY)
