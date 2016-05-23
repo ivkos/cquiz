@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../common/list.h"
 
 int questions_open_file(char * file_path);
