@@ -15,6 +15,8 @@ int questions_open_file(char * file_path)
 
         exit(1);
     }
+
+    return fd;
 }
 
 char * questions_allocate_buffer(int fd)
