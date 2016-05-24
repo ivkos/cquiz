@@ -1,7 +1,6 @@
 #pragma once
 
 #define ANSWERS_PER_QUESTION 4
-#define QUESTIONS_TOTAL 20
 #define QUESTIONS_PER_USER 10
 
 typedef struct
