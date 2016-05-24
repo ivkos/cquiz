@@ -33,6 +33,23 @@ void question_add_answer(question * q, char * answer, char is_correct)
     }
 }
 
+char * question_to_string_for_user(question * q)
+{
+    char * str = malloc(sizeof(char) * 2000);
+
+    strcpy(str, q->text);
+
+    strcpy(str + strlen(str), "\n");
+
+    for (int i = 0; i < ANSWERS_PER_QUESTION; ++i) {
+        sprintf(str + strlen(str), "[%d] %s\n", i + 1, q->answers[i]);
+    }
+
+    strcpy(str + strlen(str), "\n");
+
+    return str;
+}
+
 void question_print(question * q)
 {
     puts(q->text);
