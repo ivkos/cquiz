@@ -44,7 +44,8 @@ int server_create_socket()
 {
     int socket_descriptor = socket(AF_INET, SOCK_STREAM, 0);
 
-    if (socket_descriptor == -1) {
+    if (socket_descriptor == -1)
+    {
         perror("Could not create socket");
         exit(1);
     }
@@ -60,7 +61,8 @@ void server_listen(int server_sd, struct sockaddr_in * server)
             sizeof(*server)
     );
 
-    if (bind_result < 0) {
+    if (bind_result < 0)
+    {
         perror("Could not bind");
         exit(1);
     }
@@ -80,7 +82,8 @@ void server_start(unsigned short port, list_node * question_pool, list_node * re
 
     printf("Listening for connections on port %d...\n", port);
 
-    while ((client_sd = accept(server_sd, (struct sockaddr *) &client, &client_socket_len))) {
+    while ((client_sd = accept(server_sd, (struct sockaddr *) &client, &client_socket_len)))
+    {
         client_handler_data_holder * holder = create_holder(client_sd, &client, question_pool, results);
 
         //region Log connection
@@ -92,7 +95,8 @@ void server_start(unsigned short port, list_node * question_pool, list_node * re
         pthread_t thread;
         int res = pthread_create(&thread, NULL, handle_connection, holder);
 
-        if (res < 0) {
+        if (res < 0)
+        {
             perror("Could not create client handler thread");
             return;
         }

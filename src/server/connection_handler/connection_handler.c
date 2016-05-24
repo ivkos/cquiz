@@ -54,7 +54,8 @@ void * handle_connection(void * holder)
             {
                 char test_taken = result_list_has_faculty_id(results, faculty_id);
 
-                if (test_taken) {
+                if (test_taken)
+                {
                     faculty_id = -1;
                     server_write(sd, "TEST_TAKEN\n");
                     break;
@@ -92,11 +93,13 @@ void * handle_connection(void * holder)
         }
 
         //region Receive answer, check if correct and store points
-        if (strncmp(client_msg, "ANSWER_", strlen("ANSWER_")) == 0) {
+        if (strncmp(client_msg, "ANSWER_", strlen("ANSWER_")) == 0)
+        {
             int answer;
             sscanf(client_msg, "ANSWER_%d", &answer);
 
-            if (current_question->correct_answer_index == answer - 1) {
+            if (current_question->correct_answer_index == answer - 1)
+            {
                 points++;
             }
 

@@ -18,22 +18,27 @@ list_node * questions_parse_file(char * file_path)
 
     for (char * context, * token = strtok_r(buf, "\n", &context);
          token != NULL;
-         token = strtok_r(NULL, "\n", &context)) {
+         token = strtok_r(NULL, "\n", &context))
+    {
 
         char * question_text = malloc(strlen(token));
         int parse_question = sscanf(token, "### %[^\n]", question_text);
 
-        if (parse_question > 0) {
+        if (parse_question > 0)
+        {
             current_question = question_create(question_text);
 
             list_add(&question_list, current_question);
-        } else {
+        }
+        else
+        {
             char * answer_text = malloc(strlen(token));
             char answer_correct_mark;
 
             int parse_answer = sscanf(token, "- [%c] %[^\n]", &answer_correct_mark, answer_text);
 
-            if (parse_answer > 0) {
+            if (parse_answer > 0)
+            {
                 question_add_answer(current_question, answer_text, answer_correct_mark == 'x');
             }
 
