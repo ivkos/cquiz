@@ -1,48 +1,16 @@
 #include <malloc.h>
-#include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <fcntl.h>
 #include "question_parser.h"
-#include "../common/questions.h"
+#include "../../common/questions.h"
+#include "../parsing_utils/parsing_utils.h"
 
-int questions_open_file(char * file_path)
+list_node * questions_parse_file(char * file_path)
 {
-    int fd = open(file_path, O_RDONLY);
-
-    if (fd == -1) {
-        perror("Could not open questions file");
-
-        exit(1);
-    }
-
-    return fd;
-}
-
-char * questions_allocate_buffer(int fd)
-{
-    long size = lseek(fd, 0, SEEK_END);
-    long s = lseek(fd, 0, SEEK_SET);
-
-    if (size == -1 || s == -1) {
-        perror("seek");
-        exit(1);
-    }
-
-    char * buf = malloc((size + 1) * sizeof(char));
-
-    if (buf == NULL) {
-        fputs("Could not allocate buffer for questions", stderr);
-        exit(1);
-    }
-
-    return buf;
-}
-
-list_node * questions_parse(char * file_path)
-{
-    int fd = questions_open_file(file_path);
-    char * buf = questions_allocate_buffer(fd);
+    int fd = parsing_open_file(file_path, O_RDONLY);
+    char * buf = parsing_allocate_buffer(fd);
     read(fd, buf, malloc_usable_size(buf));
 
     question * current_question = NULL;
