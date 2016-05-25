@@ -49,8 +49,6 @@ char * question_to_string_for_user(question * q)
         sprintf(str + strlen(str), "[%d] %s\n", i + 1, q->answers[i]);
     }
 
-    strcpy(str + strlen(str), "\n");
-
     return str;
 }
 
