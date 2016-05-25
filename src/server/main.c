@@ -3,11 +3,13 @@
 #include <libgen.h>
 #include <string.h>
 #include <signal.h>
+#include <unistd.h>
 #include "question_parser/question_parser.h"
 #include "results/results.h"
 #include "utils/utils.h"
 #include "../common/questions.h"
 
+int server_socket_fd;
 list_node * questions_pool;
 list_node * results;
 
@@ -17,6 +19,8 @@ void goodbye(int signum)
 
     list_destroy(&results, result_delete);
     list_destroy(&questions_pool, question_delete);
+
+    close(server_socket_fd);
 
     exit(0);
 }
@@ -39,7 +43,7 @@ int main(int argc, char ** argv)
     signal(SIGINT, goodbye);
     signal(SIGTERM, goodbye);
 
-    server_start(port, questions_pool, results);
+    server_start(port, &server_socket_fd, questions_pool, results);
 
     return 0;
 }

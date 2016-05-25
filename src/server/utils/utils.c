@@ -70,10 +70,11 @@ void server_listen(int server_sd, struct sockaddr_in * server)
     listen(server_sd, 100);
 }
 
-void server_start(unsigned short port, list_node * question_pool, list_node * results)
+void server_start(unsigned short port, int * server_socket_fd, list_node * question_pool, list_node * results)
 {
     struct sockaddr_in server = server_create_sin(port);
     int server_sd = server_create_socket();
+    *server_socket_fd = server_sd;
     server_listen(server_sd, &server);
 
     struct sockaddr_in client;
