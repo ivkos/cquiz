@@ -16,6 +16,4 @@ void question_add_answer(question * q, char * answer, char is_correct);
 
 char * question_to_string_for_user(question * q);
 
-void question_print(question * q);
-
 void question_delete(question ** q);

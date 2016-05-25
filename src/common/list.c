@@ -104,33 +104,6 @@ list_node * list_pick_random(list_node * src_list, int count)
     return new_list;
 }
 
-void list_foreach(list_node * head, void (* action)(void *))
-{
-    if (action == NULL) return;
-
-    for (list_node * current = head; current != NULL; current = current->next)
-    {
-        (*action)(current->element);
-    }
-}
-
-list_node * list_map(list_node * src_list, void * (* mapper)(void *))
-{
-    if (mapper == NULL)
-    {
-        return src_list;
-    }
-
-    list_node * new_list = NULL;
-
-    for (list_node * current = src_list; current != NULL; current = current->next)
-    {
-        list_add(&new_list, (*mapper)(current->element));
-    }
-
-    return new_list;
-}
-
 void list_destroy(list_node ** head, void (* element_destructor)(void **))
 {
     for (list_node * current = *head; current != NULL; current = current->next)

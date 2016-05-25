@@ -15,8 +15,4 @@ int list_count(list_node * head);
 
 list_node * list_pick_random(list_node * src_list, int count);
 
-void list_foreach(list_node * head, void (* action)(void *));
-
-list_node * list_map(list_node * src_list, void * (* mapper)(void *));
-
 void list_destroy(list_node ** head, void (* element_destructor)(void **));

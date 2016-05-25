@@ -54,18 +54,6 @@ char * question_to_string_for_user(question * q)
     return str;
 }
 
-void question_print(question * q)
-{
-    puts(q->text);
-
-    for (int i = 0; i < ANSWERS_PER_QUESTION; ++i)
-    {
-        printf("[%c] %s\n", q->correct_answer_index == i ? 'x' : ' ', q->answers[i]);
-    }
-
-    putchar('\n');
-}
-
 void question_delete(question ** q)
 {
     free((*q)->text);
