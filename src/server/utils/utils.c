@@ -50,6 +50,14 @@ int server_create_socket()
         exit(1);
     }
 
+    //region Mark socket as reusable to prevent binding issues
+    {
+        int opt_val = 1;
+        socklen_t opt_len = sizeof(opt_val);
+        setsockopt(socket_descriptor, SOL_SOCKET, SO_REUSEADDR, &opt_val, opt_len);
+    }
+    //endregion
+
     return socket_descriptor;
 }
 
