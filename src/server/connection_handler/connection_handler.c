@@ -73,7 +73,7 @@ void * handle_connection(void * holder)
             }
             else if (client_questions_list_current->next != NULL)
             {
-                client_questions_list_current = client_questions->next;
+                client_questions_list_current = client_questions_list_current->next;
                 current_question = client_questions_list_current->element;
             }
             else
