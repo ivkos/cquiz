@@ -31,15 +31,12 @@ void * handle_connection(void * holder)
     question * current_question = NULL;
     //endregion
 
-    server_write(sd, "SEND_ID\n");
+    server_write(sd, "SEND_ID");
 
     long bytes_read;
     while ((bytes_read = recv(sd, client_msg, MESSAGE_BUFFER, 0)) > 0)
     {
-        server_msg = NULL;
-
-        // TODO Remove after building a proper client
-        client_msg[bytes_read - 1] = 0; // replace the \n with NUL-terminator
+        client_msg[bytes_read] = 0; // replace the \n with NUL-terminator
 
         if (faculty_id == -1)
         {
@@ -47,7 +44,7 @@ void * handle_connection(void * holder)
 
             if (read_faculty_id != 1)
             {
-                server_write(sd, "SEND_ID\n");
+                server_write(sd, "SEND_ID");
                 continue;
             }
             else
@@ -57,12 +54,12 @@ void * handle_connection(void * holder)
                 if (test_taken)
                 {
                     faculty_id = -1;
-                    server_write(sd, "TEST_TAKEN\n");
+                    server_write(sd, "TEST_TAKEN");
                     break;
                 }
 
                 points = 0;
-                server_write(sd, "OK\n");
+                server_write(sd, "OK");
                 continue;
             }
         }
@@ -81,7 +78,7 @@ void * handle_connection(void * holder)
             }
             else
             {
-                server_write(sd, "END\n");
+                server_write(sd, "END");
                 continue;
             }
 
@@ -103,7 +100,7 @@ void * handle_connection(void * holder)
                 points++;
             }
 
-            server_write(sd, "OK\n");
+            server_write(sd, "OK");
             continue;
         }
         //endregion
