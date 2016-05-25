@@ -15,8 +15,8 @@ set(SERVER_SOURCE_FILES
         src/server/question_parser/question_parser.c
         src/server/question_parser/question_parser.h
 
-        src/server/utils/server_utils.c
-        src/server/utils/server_utils.h
+        src/server/utils/utils.c
+        src/server/utils/utils.h
 
         src/server/connection_handler/connection_handler.c
         src/server/connection_handler/connection_handler.h

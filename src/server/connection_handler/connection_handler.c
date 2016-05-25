@@ -6,7 +6,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "connection_handler.h"
-#include "../server_utils/server_utils.h"
+#include "../utils/utils.h"
 #include "../results/results.h"
 #include "../../common/questions.h"
 

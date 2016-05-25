@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "../connection_handler/connection_handler.h"
-#include "server_utils.h"
+#include "utils.h"
 
 client_handler_data_holder * create_holder(int client_socket_descriptor, struct sockaddr_in * client,
                                            list_node * question_pool, list_node * results)

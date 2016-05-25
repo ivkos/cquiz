@@ -5,7 +5,7 @@
 #include <signal.h>
 #include "question_parser/question_parser.h"
 #include "results/results.h"
-#include "server_utils/server_utils.h"
+#include "utils/utils.h"
 #include "../common/questions.h"
 
 list_node * questions_pool;
