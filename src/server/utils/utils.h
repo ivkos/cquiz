@@ -19,7 +19,7 @@ struct sockaddr_in server_create_sin(unsigned short port);
 
 int server_create_socket();
 
-void server_listen(int server_sd, struct sockaddr_in * server);
+void server_listen(int server_socket_fd, struct sockaddr_in * server);
 
 void server_start(unsigned short port, int * server_socket_fd, list_node * question_pool, list_node * results);
 

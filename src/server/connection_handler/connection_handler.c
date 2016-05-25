@@ -13,8 +13,8 @@
 void * handle_connection(void * holder)
 {
     //region Dereference holder
-    int sd = *((client_handler_data_holder *) holder)->client_socket_descriptor;
-    struct sockaddr_in * client = ((client_handler_data_holder *) holder)->client;
+    int client_socket_fd = *((client_handler_data_holder *) holder)->client_socket_descriptor;
+    struct sockaddr_in * client_addr = ((client_handler_data_holder *) holder)->client;
     list_node * question_pool = ((client_handler_data_holder *) holder)->question_pool;
     list_node * results = ((client_handler_data_holder *) holder)->results;
     //endregion
@@ -31,20 +31,21 @@ void * handle_connection(void * holder)
     question * current_question = NULL;
     //endregion
 
-    server_write(sd, "SEND_ID");
+    server_write(client_socket_fd, "SEND_ID");
 
     long bytes_read;
-    while ((bytes_read = recv(sd, client_msg, MESSAGE_BUFFER, 0)) > 0)
+    while ((bytes_read = recv(client_socket_fd, client_msg, MESSAGE_BUFFER, 0)) > 0)
     {
         client_msg[bytes_read] = 0; // replace the \n with NUL-terminator
 
+        //region SEND_ID -> parse
         if (faculty_id == -1)
         {
             int read_faculty_id = sscanf(client_msg, "%li", &faculty_id);
 
             if (read_faculty_id != 1)
             {
-                server_write(sd, "SEND_ID");
+                server_write(client_socket_fd, "SEND_ID");
                 continue;
             }
             else
@@ -54,16 +55,18 @@ void * handle_connection(void * holder)
                 if (test_taken)
                 {
                     faculty_id = -1;
-                    server_write(sd, "TEST_TAKEN");
+                    server_write(client_socket_fd, "TEST_TAKEN");
                     break;
                 }
 
                 points = 0;
-                server_write(sd, "OK");
+                server_write(client_socket_fd, "OK");
                 continue;
             }
         }
+        //endregion
 
+        //region NEXT_QUESTION -> send question
         if (!strcmp(client_msg, "NEXT_QUESTION"))
         {
             if (client_questions_list_current == NULL)
@@ -78,16 +81,17 @@ void * handle_connection(void * holder)
             }
             else
             {
-                server_write(sd, "END");
+                server_write(client_socket_fd, "END");
                 continue;
             }
 
             server_msg = question_to_string_for_user(current_question);
-            server_write(sd, server_msg);
+            server_write(client_socket_fd, server_msg);
             free(server_msg);
 
             continue;
         }
+        //endregion
 
         //region Receive answer, check if correct and store points
         if (strncmp(client_msg, "ANSWER_", strlen("ANSWER_")) == 0)
@@ -100,19 +104,21 @@ void * handle_connection(void * holder)
                 points++;
             }
 
-            server_write(sd, "OK");
+            server_write(client_socket_fd, "OK");
             continue;
         }
         //endregion
 
+        //region GET_RESULTS
         if (!strcmp(client_msg, "GET_RESULTS"))
         {
             char points_str[100];
             sprintf(points_str, "%d", points);
-            server_write(sd, points_str);
+            server_write(client_socket_fd, points_str);
 
             break;
         }
+        //endregion
     }
 
     if (faculty_id > 0 && points >= 0)
@@ -124,7 +130,7 @@ void * handle_connection(void * holder)
     if (bytes_read >= 0)
     {
         char ip_str[INET_ADDRSTRLEN];
-        inet_ntop(AF_INET, &client->sin_addr, ip_str, INET_ADDRSTRLEN);
+        inet_ntop(AF_INET, &client_addr->sin_addr, ip_str, INET_ADDRSTRLEN);
         printf("Client (%s) disconnected\n", ip_str);
     }
     else if (bytes_read == -1)
@@ -132,7 +138,7 @@ void * handle_connection(void * holder)
         perror("recv");
     }
 
-    close(sd);
+    close(client_socket_fd);
     destroy_holder(holder);
     //endregion
 
