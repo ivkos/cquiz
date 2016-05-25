@@ -35,7 +35,7 @@ int client_create_socket(char * hostname, unsigned short port)
           (char *) &server_addr.sin_addr.s_addr,
           server_host->h_length);
 
-    if (connect(socket_fd, &server_addr, sizeof(server_addr)) < 0)
+    if (connect(socket_fd, (const struct sockaddr *) &server_addr, sizeof(server_addr)) < 0)
     {
         perror("Cannot connect to server");
         exit(1);
