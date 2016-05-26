@@ -124,6 +124,7 @@ void * handle_connection(void * holder)
     if (faculty_id > 0 && points >= 0)
     {
         list_add(&results, result_create(faculty_id, points));
+        printf("Student %li scored %d points\n", faculty_id, points);
     }
 
     //region Disconnect handling
