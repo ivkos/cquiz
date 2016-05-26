@@ -76,6 +76,7 @@ void interact(int socket_fd)
                 printf("Enter your faculty ID: ");
 
                 long faculty_id;
+                fflush(stdin);
                 int scanf_result = scanf("%li", &faculty_id);
 
                 if (scanf_result != 1) continue;
@@ -139,6 +140,7 @@ void interact(int socket_fd)
             printf("Your answer: ");
 
             int answer;
+            fflush(stdin);
             int scanf_result = scanf("%d", &answer);
 
             if (scanf_result != 1 || answer < 1 || answer > ANSWERS_PER_QUESTION) continue;
