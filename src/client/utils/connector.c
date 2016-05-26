@@ -52,6 +52,14 @@ void clear_screen()
 }
 
 
+void clear_stdin()
+{
+    int c;
+    do {
+        c = getchar();
+    } while (c != '\n' && c != EOF);
+}
+
 void interact(int socket_fd)
 {
     char * client_msg;
@@ -76,8 +84,8 @@ void interact(int socket_fd)
                 printf("Enter your faculty ID: ");
 
                 long faculty_id;
-                fflush(stdin);
                 int scanf_result = scanf("%li", &faculty_id);
+                clear_stdin();
 
                 if (scanf_result != 1) continue;
 
@@ -139,8 +147,8 @@ void interact(int socket_fd)
             printf("Your answer: ");
 
             int answer;
-            fflush(stdin);
             int scanf_result = scanf("%d", &answer);
+            clear_stdin();
 
             if (scanf_result != 1 || answer < 1 || answer > ANSWERS_PER_QUESTION) continue;
 
