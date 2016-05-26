@@ -95,7 +95,6 @@ void interact(int socket_fd)
         //region TEST_TAKEN -> exit
         if (strcmp(server_msg, "TEST_TAKEN") == 0)
         {
-            clear_screen();
             puts("You've already taken the test!");
             break;
         }
